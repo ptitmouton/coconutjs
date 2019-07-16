@@ -39,9 +39,11 @@ export interface CreateJobOptions {
 
 export interface Job {
   id: number;
-  errors: JobOutputFormat;
   output_urls: string[];
   event: string;
+  errors?: JobOutputFormat;
+  error_code?: string;
+  error_message?: string;
 }
 
 type Callback<T> = (error: (null | Error), job?: T) => void;

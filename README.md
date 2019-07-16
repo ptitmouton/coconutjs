@@ -1,9 +1,11 @@
 # NodeJS client Library for encoding Videos with Coconut
 
+This is a fork from https://github.com/opencoconut/coconutjs
+
 ## Install
 
 ```console
-npm install coconutjs
+npm install @ptitmouton/coconutjs
 ```
 
 ## Submitting the job
@@ -25,32 +27,39 @@ set webhook = http://mysite.com/webhook/coconut?videoId=$vid
 Here is the javascript code to submit the config file:
 
 ```javascript
-var coconut = require('coconutjs');
+import Coconut from '@ptitmouton/coconutjs';
 
-coconut.createJob({
-  'api_key': 'k-api-key',
+const coconut = new Coconut('k-api-key');
+// or add via COCONUT_API_KEY env var, just:
+const coconut = new Coconut();
+
+const job = await coconut.createJob({
   'conf': 'coconut.conf',
   'source': 'https://s3-eu-west-1.amazonaws.com/files.coconut.co/test.mp4',
   'vars': {'vid': 1234}
-}, function(job) {
-  if(job.status == 'ok') {
-    console.log(job.id);
-  } else {
-    console.log(job.error_code);
-    console.log(job.error_message);
-  }
 });
+
+if (job.status == 'ok') {
+  console.log(job.id);
+} else {
+  console.log(job.error_code);
+  console.log(job.error_message);
+}
 ```
 
 You can also create a job without a config file. To do that you will need to give every settings in the method parameters. Here is the exact same job but without a config file:
 
 ```javascript
-var coconut = require('coconutjs');
+import Coconut from '@ptitmouton/coconutjs';
+
+const coconut = new Coconut('k-api-key');
+// or add via COCONUT_API_KEY env var, just:
+const coconut = new Coconut();
 
 vid = 1234
 s3 = 's3://accesskey:secretkey@mybucket'
 
-coconut.createJob({
+const job = await coconut.createJob({
   'api_key': 'k-api-key',
   'source': 'http://yoursite.com/media/video.mp4',
   'webhook': 'http://mysite.com/webhook/coconut?videoId=' + vid,
@@ -59,8 +68,6 @@ coconut.createJob({
     'webm': s3 + '/videos/video_' + vid + '.webm',
     'jpg:300x': s3 + '/previews/thumbs_#num#.jpg, number=3'
   }
-}, function(job) {
-  //...
 });
 ```
 
@@ -68,18 +75,17 @@ Other example usage:
 
 ```javascript
 // Getting info about a job
-job = coconut.getJob(18370773, function(job) {
-  //...
-});
+const job = await coconut.getJob(18370773);
 
 // Retrieving metadata
-coconut.getAllMetadata(18370773, function(metadata) {
-  // ...
-});
+const metadata = await coconut.getAllMetadata(18370773);
 
 // Retrieving the source file metadata only
-coconut.getMetadataFor(18370773, 'source', function(metadata) {
-  // ...
+const metadata = coconut.getMetadataFor(18370773, 'source');
+
+// use every function callback-style
+coconut.getJob(18370773, job => {
+  // do something with job
 });
 ```
 
