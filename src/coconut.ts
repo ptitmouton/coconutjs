@@ -41,6 +41,10 @@ export interface Job {
   id: number;
   output_urls: string[];
   event: string;
+  created_at: string;
+  completed_at: string;
+  status: string;
+  progress: string;
   errors?: JobOutputFormat;
   error_code?: string;
   error_message?: string;
