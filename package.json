@@ -1,9 +1,12 @@
 {
-  "name": "coconutjs",
-  "version": "2.4.0",
+  "name": "@ptitmouton/coconutjs",
+  "version": "3.0.0-beta.0",
   "homepage": "http://coconut.co",
   "description": "NodeJS Module to encode videos with Coconut, a Cloud Video Encoding Service built for developers",
-  "main": "coconut.js",
+  "main": "dist/coconut.js",
+  "scripts": {
+    "build": "tsc"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/opencoconut/coconutjs.git"
@@ -22,6 +25,8 @@
   "author": "Bruno Celeste",
   "license": "MIT",
   "devDependencies": {
-    "nodeunit": "^0.11.3"
+    "@types/node": "^12.6.3",
+    "nodeunit": "^0.11.3",
+    "typescript": "^3.5.3"
   }
 }
