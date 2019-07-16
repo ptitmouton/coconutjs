@@ -3,7 +3,7 @@ import https from 'https';
 import { parse as parseUrl } from 'url';
 var fs = require('fs');
 
-const USER_AGENT = 'Coconut/2.4.0 (NodeJS)';
+const USER_AGENT = 'Coconut/3.0.0 (NodeJS)';
 const COCONUT_URL = parseUrl(process.env.COCONUT_URL || 'https://api.coconut.co');
 
 export interface JobOutputFormat {
@@ -46,7 +46,7 @@ export interface Job {
   error_message?: string;
 }
 
-type Callback<T> = (error: (null | Error), job?: T) => void;
+export type Callback<T> = (error: (null | Error), job?: T) => void;
 
 export default class CoconutJS {
 
@@ -73,9 +73,9 @@ export default class CoconutJS {
     }
   }
 
-  public getJob(jobId: string): Promise<Job>;
-  public getJob(jobId: string, callback: Callback<Job>): void;
-  public getJob(jobId: string, callback?: Callback<Job>): void | Promise<Job> {
+  public getJob(jobId: number): Promise<Job>;
+  public getJob(jobId: number, callback: Callback<Job>): void;
+  public getJob(jobId: number, callback?: Callback<Job>): void | Promise<Job> {
     const promise = this.get(`/v1/jobs/${jobId}`);
     if (typeof callback === 'undefined') {
       return promise;
@@ -87,9 +87,9 @@ export default class CoconutJS {
     }
   }
 
-  public getAllMetadata(jobId: string): Promise<Job>;
-  public getAllMetadata(jobId: string, callback: Callback<Job>): void;
-  public getAllMetadata(jobId: string, callback?: Callback<Job>): void | Promise<Job> {
+  public getAllMetadata(jobId: number): Promise<Job>;
+  public getAllMetadata(jobId: number, callback: Callback<Job>): void;
+  public getAllMetadata(jobId: number, callback?: Callback<Job>): void | Promise<Job> {
     const promise = this.get(`/v1/metadata/jobs/${jobId}`);
     if (typeof callback === 'undefined') {
       return promise;
@@ -116,7 +116,7 @@ export default class CoconutJS {
   }
 
   private async sendCoconutRequest<T = any>(requestOptions: RequestOptions, data?: any): Promise<T> {
-    return new Promise((resolve, reject) => {
+    return new Promise<T>((resolve, reject) => {
 
       const req = (COCONUT_URL.protocol == 'https:' ? https : http).request(requestOptions, (res: any) => {
         res.setEncoding('utf8');

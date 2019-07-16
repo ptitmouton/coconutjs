@@ -1,6 +1,6 @@
 {
   "name": "@ptitmouton/coconutjs",
-  "version": "3.0.0-beta.1",
+  "version": "3.0.0-beta.2",
   "homepage": "http://coconut.co",
   "description": "NodeJS Module to encode videos with Coconut, a Cloud Video Encoding Service built for developers",
   "main": "dist/coconut.js",

@@ -37,22 +37,21 @@ export interface Job {
     error_code?: string;
     error_message?: string;
 }
-declare type Callback<T> = (error: (null | Error), job?: T) => void;
+export declare type Callback<T> = (error: (null | Error), job?: T) => void;
 export default class CoconutJS {
     private apiKey;
     constructor(apiKey?: string | undefined);
     createJob(options: CreateJobOptions): Promise<Job>;
     createJob(options: CreateJobOptions, callback: Callback<Job>): void;
-    getJob(jobId: string): Promise<Job>;
-    getJob(jobId: string, callback: Callback<Job>): void;
-    getAllMetadata(jobId: string): Promise<Job>;
-    getAllMetadata(jobId: string, callback: Callback<Job>): void;
+    getJob(jobId: number): Promise<Job>;
+    getJob(jobId: number, callback: Callback<Job>): void;
+    getAllMetadata(jobId: number): Promise<Job>;
+    getAllMetadata(jobId: number, callback: Callback<Job>): void;
     getAllMetadataFor(jobId: string, sourceOrOutput: string): Promise<Job>;
     getAllMetadataFor(jobId: string, sourceOrOutput: string, callback: Callback<Job>): void;
-    private sendCoconutRequest;
-    private submit;
-    private get;
-    private getRequestOptions;
-    private getConfig;
+    private sendCoconutRequest<T>(requestOptions, data?);
+    private submit<T>(configContent);
+    private get<T>(path);
+    private getRequestOptions(method, options?);
+    private getConfig(options);
 }
-export {};

@@ -7,7 +7,7 @@ const http_1 = __importDefault(require("http"));
 const https_1 = __importDefault(require("https"));
 const url_1 = require("url");
 var fs = require('fs');
-const USER_AGENT = 'Coconut/2.4.0 (NodeJS)';
+const USER_AGENT = 'Coconut/3.0.0 (NodeJS)';
 const COCONUT_URL = url_1.parse(process.env.COCONUT_URL || 'https://api.coconut.co');
 class CoconutJS {
     constructor(apiKey = process.env.COCONUT_API_KEY) {
